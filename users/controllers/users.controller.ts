@@ -4,9 +4,13 @@ import userService from "../services/users.service";
 
 class UsersController {
   async createUser(req: Request, res: Response) {
-    req.body.password = await argon2.hash(req.body.password);
-    const userId = await userService.createUser(req.body);
-    res.status(201).send(userId);
+    try {
+      req.body.password = await argon2.hash(req.body.password);
+      const userId = await userService.createUser(req.body);
+      res.status(201).send(userId);
+    } catch (error) {
+      res.status(500).send({ errors: "Something went wrong" });
+    }
   }
 }
 

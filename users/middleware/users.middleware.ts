@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import usersService from "../services/users.service";
 
-export async function verifyIfEmailAlreadyExist(
+export async function checkIfEmailAlreadyExist(
   req: Request,
   res: Response,
   next: NextFunction

@@ -11,9 +11,10 @@ class RecipeDao {
       _id: { type: String, immutable: true, required: true },
       description: { type: String, required: true },
       name: { type: String, required: true },
-      ingredients: [String],
-      preparationSteps: [String],
+      ingredients: { type: [String], required: true },
+      preparationSteps: { type: [String], required: true },
       userId: { type: String, immutable: true, required: true },
+      imageUrl: String,
     },
     { id: false }
   );
@@ -35,11 +36,13 @@ class RecipeDao {
     return await this.Recipe.findById(recipeId);
   }
 
-  async getRecipes(limit = 20, page = 0) {
-    return await this.Recipe.find()
+  async getRecipes(limit = 100, page = 1, phrase: string) {
+    const searchCriteria =
+      phrase.length > 3 ? { name: new RegExp(phrase, "i") } : {};
+    return await this.Recipe.find(searchCriteria)
       .sort({ name: "asc" })
       .limit(limit)
-      .skip(limit * page)
+      .skip(limit * (page - 1))
       .exec();
   }
 

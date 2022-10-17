@@ -8,6 +8,8 @@ import helmet from "helmet";
 import recipesRouter from "./recipes/recipes.routes";
 import authRouter from "./auth/auth.routes";
 import userRouter from "./users/users.routes";
+import { errorHandler } from "./common/middleware/error.middleware";
+import { notFoundHandler } from "./common/middleware/notFound.middleware";
 
 const app: express.Application = express();
 
@@ -32,5 +34,7 @@ app.use(expressWinston.logger(loggerOptions));
 app.use("/auth", authRouter);
 app.use("/recipes", recipesRouter);
 app.use("/users", userRouter);
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 export default app;

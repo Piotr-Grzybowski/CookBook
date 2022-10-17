@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import recipesService from "../services/recipes.service";
 
-export async function validateIfRecipeExist(
+export async function checkIfRecipeExist(
   req: Request,
   res: Response,
   next: NextFunction

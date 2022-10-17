@@ -1,6 +1,6 @@
 import express from "express";
 import recipesController from "./controllers/recipes.controller";
-import { validateIfRecipeExist } from "./middleware/recipe.middleware";
+import { checkIfRecipeExist } from "./middleware/recipe.middleware";
 import { validateBody } from "../common/middleware/body.validator.middleware";
 import { body, check } from "express-validator";
 import { checkIfTokenIsValid } from "../auth/middleware/auth.middleware";
@@ -20,6 +20,7 @@ recipesRouter
     body("name").isString().not().isEmpty().trim().escape(),
     body("ingredients").isArray(),
     body("preparationSteps").isArray(),
+    body("imageUrl").isURL(),
     check("ingredients.*").isString().not().isEmpty().trim().escape(),
     check("preparationSteps.*").isString().not().isEmpty().trim().escape(),
     validateBody,
@@ -29,7 +30,7 @@ recipesRouter
 
 recipesRouter
   .route("/:recipeId")
-  .all(validateIfRecipeExist)
+  .all(checkIfRecipeExist)
   .get(recipesController.getRecipeById)
   .put(
     body("description")
@@ -40,6 +41,7 @@ recipesRouter
     body("name").isString().not().isEmpty().trim().escape(),
     body("ingredients").isArray(),
     body("preparationSteps").isArray(),
+    body("imageUrl").isURL(),
     check("ingredients.*").isString().not().isEmpty().trim().escape(),
     check("preparationSteps.*").isString().not().isEmpty().trim().escape(),
     validateBody,

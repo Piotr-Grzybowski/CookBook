@@ -13,12 +13,11 @@ export async function checkIfAuthorOrAdmin(
   const recipe = await recipesService.readById(req.params.recipeId);
 
   if (recipe) {
-    const authorOfTheRecipe = recipe.userId;
+    const authorOfTheRecipeId = recipe.userId;
     const currentUserId = res.locals.jwt.userId;
     const currentPermissionLevel = res.locals.jwt.permissionLevel;
-    log(authorOfTheRecipe, currentPermissionLevel, currentUserId, recipe);
     if (
-      authorOfTheRecipe === currentUserId ||
+      authorOfTheRecipeId === currentUserId ||
       currentPermissionLevel === PermissionFlag.ADMIN_PERMISSION
     ) {
       return next();

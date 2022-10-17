@@ -8,11 +8,11 @@ class UsersDao {
 
   userSchema = new this.Schema(
     {
-      _id: { immutable: true, type: String },
+      _id: { immutable: true, type: String, required: true },
       email: { type: String, required: true },
       password: { type: String, select: false, required: true },
       name: String,
-      permissionLevel: { type: Number, immutable: true },
+      permissionLevel: { type: Number, immutable: true, required: true },
     },
     { id: false }
   );

@@ -24,7 +24,6 @@ class AuthController {
       });
       return res.status(201).send({ accessToken: token, refreshToken: hash });
     } catch (err) {
-      log("createJWT error: %O", err);
       return res.status(500).send();
     }
   }
