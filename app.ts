@@ -1,10 +1,13 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import * as winston from "winston";
 import * as expressWinston from "express-winston";
 import cors from "cors";
-import debug from "debug";
 import helmet from "helmet";
 import recipesRouter from "./recipes/recipes.routes";
+import authRouter from "./auth/auth.routes";
+import userRouter from "./users/users.routes";
 
 const app: express.Application = express();
 
@@ -26,6 +29,8 @@ if (!process.env.DEBUG) {
 }
 
 app.use(expressWinston.logger(loggerOptions));
+app.use("/auth", authRouter);
 app.use("/recipes", recipesRouter);
+app.use("/users", userRouter);
 
 export default app;
