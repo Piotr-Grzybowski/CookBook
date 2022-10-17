@@ -36,7 +36,7 @@ class RecipeDao {
     return await this.Recipe.findById(recipeId);
   }
 
-  async getRecipes(limit = 100, page = 1, phrase: string) {
+  async getRecipes(limit = 100, page = 1, phrase: string = "") {
     const searchCriteria =
       phrase.length > 3 ? { name: new RegExp(phrase, "i") } : {};
     return await this.Recipe.find(searchCriteria)

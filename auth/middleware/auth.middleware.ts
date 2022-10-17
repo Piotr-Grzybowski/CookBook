@@ -8,7 +8,6 @@ import HttpException from "../../common/HttpException";
 
 const log: debug.IDebugger = debug("app:auth-middleware");
 
-// @ts-expect-error
 const jwtSecret: string = process.env.JWT_SECRET;
 
 export async function checkIfCredentialsValid(

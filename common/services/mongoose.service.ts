@@ -12,9 +12,14 @@ class MongooseService {
     return mongoose;
   }
 
+  uri =
+    process.env.NODE_ENV === "testing"
+      ? "mongodb://localhost:27017/test"
+      : "mongodb://localhost:27017/cook-book";
+
   connectOrRetry() {
     mongoose
-      .connect("mongodb://localhost:27017/cook-book")
+      .connect(this.uri)
       .then(() => {
         log("MongoDB is connected");
       })

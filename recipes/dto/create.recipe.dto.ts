@@ -3,5 +3,5 @@ export interface CreateRecipeDto {
   description: string;
   ingredients: string[];
   preparationSteps: string[];
-  imageUrl: string;
+  imageUrl?: string;
 }

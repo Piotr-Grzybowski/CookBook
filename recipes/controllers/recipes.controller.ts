@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import HttpException from "../../common/HttpException";
 import recipesService from "../services/recipes.service";
 
 class RecipesController {
