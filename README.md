@@ -56,6 +56,24 @@ In api we have three kinds of resources
  POST http://localhost:3000/users/register
 ```
 
+## Permissions
+There are two kinds of three kinds of permissions in this app.
+### User not logged in
+ - can see list of recipes
+ - can get single recipe
+ - can register new account
+ - can login
+### User logged in 
+ - can see list of recipes
+ - can get single recipe
+ - can add new recipe
+ - can edit recipe of his ownership
+ - can delete recipe of his ownership
+### Admin
+ - can do everything what logged in user
+ - can edit any recipe
+ - can delete any recipe
+
 ## Testing
 
 - To run test just use npm test
