@@ -5,7 +5,6 @@ import debug from "debug";
 
 const log: debug.IDebugger = debug("app:auth-controller");
 
-// @ts-expect-error
 const jwtSecret: string = process.env.JWT_SECRET;
 const tokenExpirationInSeconds = 36000;
 

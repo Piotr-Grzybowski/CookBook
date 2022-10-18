@@ -73,7 +73,6 @@ export async function checkIfTokenIsValid(
         return res.status(401).send();
       } else {
         res.locals.jwt = jwt.verify(authorization[1], jwtSecret);
-        log(res.locals);
         next();
       }
     } catch (err) {

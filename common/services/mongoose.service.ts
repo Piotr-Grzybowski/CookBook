@@ -1,32 +1,31 @@
 import mongoose from "mongoose";
 import debug from "debug";
+import dotenv from "dotenv";
+dotenv.config();
 
 const log: debug.IDebugger = debug("app:mongoose-service");
 
 class MongooseService {
   constructor() {
-    this.connectOrRetry();
+    const uri =
+      process.env.NODE_ENV === "testing"
+        ? process.env.MONGODB_URL_TEST
+        : process.env.MONGODB_URL_DEV;
+    this.connectWithDB(uri);
   }
 
   getMongoose() {
     return mongoose;
   }
 
-  uri =
-    process.env.NODE_ENV === "testing"
-      ? "mongodb://localhost:27017/test"
-      : "mongodb://localhost:27017/cook-book";
-
-  connectOrRetry() {
+  connectWithDB(uri) {
     mongoose
-      .connect(this.uri)
+      .connect(uri)
       .then(() => {
         log("MongoDB is connected");
       })
       .catch((err) => {
-        const retrySeconds = 5;
-        log(`MongoDB couldn't connect ( will retry in ${retrySeconds})`);
-        setTimeout(this.connectOrRetry, retrySeconds * 1000);
+        log(`MongoDB couldn't connect, some error occurred`);
       });
   }
 }

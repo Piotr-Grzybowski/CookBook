@@ -1,12 +1,11 @@
 import RecipeDao from "../dao/recipes.dao";
 import { CreateRecipeDto } from "../dto/create.recipe.dto";
 import { PutRecipeDto } from "../dto/put.recipe.dto";
+import { listOptions } from "../types/listOptions";
 
 class RecipesService {
-  async list(limit: number, page: number, phrase: string) {
-    const amountOfRecordsPerPage = limit > 0 ? limit : 10;
-    const pageNumber = page > 0 ? page : 1;
-    return RecipeDao.getRecipes(amountOfRecordsPerPage, pageNumber, phrase);
+  async list(listOptions: listOptions) {
+    return RecipeDao.getRecipes(listOptions);
   }
   async create(recipeData: CreateRecipeDto, userId: string) {
     return await RecipeDao.addRecipe(recipeData, userId);

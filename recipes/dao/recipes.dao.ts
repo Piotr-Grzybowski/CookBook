@@ -2,6 +2,7 @@ import shortid from "shortid";
 import mongooseService from "../../common/services/mongoose.service";
 import { CreateRecipeDto } from "../dto/create.recipe.dto";
 import { PutRecipeDto } from "../dto/put.recipe.dto";
+import { listOptions } from "../types/listOptions";
 
 class RecipeDao {
   Schema = mongooseService.getMongoose().Schema;
@@ -36,13 +37,15 @@ class RecipeDao {
     return await this.Recipe.findById(recipeId);
   }
 
-  async getRecipes(limit = 100, page = 1, phrase: string = "") {
+  async getRecipes({ phrase = "", limit = 10, page = 1 }: listOptions) {
     const searchCriteria =
       phrase.length > 3 ? { name: new RegExp(phrase, "i") } : {};
+    const howManyOnPage = limit > 0 ? limit : 10;
+    const pageNumber = page > 0 ? page : 1;
     return await this.Recipe.find(searchCriteria)
       .sort({ name: "asc" })
-      .limit(limit)
-      .skip(limit * (page - 1))
+      .limit(howManyOnPage)
+      .skip(howManyOnPage * (pageNumber - 1))
       .exec();
   }
 

@@ -1,13 +1,12 @@
 import mongooseService from "../../common/services/mongoose.service";
-import * as mongoose from "mongoose";
-import recipesDao from "./recipes.dao";
+import recipesService from "../services/recipes.service";
 
 afterAll(async () => {
   await mongooseService.getMongoose().connection.dropDatabase();
-  await mongoose.disconnect();
+  await mongooseService.getMongoose().disconnect();
 });
 
-describe("Testing recipe DAO", () => {
+describe("Testing recipe Service", () => {
   let id1, id2, id3;
   const recipe1 = {
     description: "Lorem ipsum dolor",
@@ -34,13 +33,13 @@ describe("Testing recipe DAO", () => {
     ],
   };
   test("user should be able to list recipes and add new one", async () => {
-    const recipeWithId1 = await recipesDao.addRecipe(recipe1, "111");
-    const recipeWithId2 = await recipesDao.addRecipe(recipe2, "111");
-    const recipeWithId3 = await recipesDao.addRecipe(recipe3, "111");
+    const recipeWithId1 = await recipesService.create(recipe1, "111");
+    const recipeWithId2 = await recipesService.create(recipe2, "111");
+    const recipeWithId3 = await recipesService.create(recipe3, "111");
     id1 = recipeWithId1._id;
     id2 = recipeWithId2._id;
     id3 = recipeWithId3._id;
-    const recipes = await recipesDao.getRecipes();
+    const recipes = await recipesService.list({});
 
     expect(recipes.length).toBe(3);
     expect(recipes[0].name).toEqual(recipe1.name);
@@ -57,36 +56,41 @@ describe("Testing recipe DAO", () => {
     expect(recipes[2].preparationSteps).toEqual(recipe3.preparationSteps);
   });
   test("user should be able to get recipe with given id", async () => {
-    const recipe = await recipesDao.getRecipeById(id1);
+    const recipe = await recipesService.readById(id1);
     expect(recipe.name).toEqual(recipe1.name);
     expect(recipe.description).toEqual(recipe1.description);
     expect(recipe._id).toEqual(id1);
   });
   test("user should be able to update recipe with given id", async () => {
-    const recipe = await recipesDao.getRecipeById(id2);
+    const recipe = await recipesService.readById(id2);
     expect(recipe.name).toEqual(recipe2.name);
-    await recipesDao.updateRecipeById(id2, {
+    await recipesService.updateById(id2, {
       name: "Chicken soup",
     });
-    const updatedRecipe = await recipesDao.getRecipeById(id2);
+    const updatedRecipe = await recipesService.readById(id2);
     expect(updatedRecipe.name).toBe("Chicken soup");
     expect(updatedRecipe.description).toBe(recipe2.description);
   });
   test("list of recipes should be ordered ascending by name and pagination should work", async () => {
     const howManyOnPage = 1;
     const pageNumber = 2;
-    const recipes = await recipesDao.getRecipes(howManyOnPage, pageNumber);
+    const recipes = await recipesService.list({
+      limit: 1,
+      page: 2,
+    });
     expect(recipes.length).toBe(1);
     expect(recipes[0]._id).toBe(id2);
   });
   test("user should be able to look for partial name of recipe", async () => {
-    const searchedRecipe = await recipesDao.getRecipes(10, 1, "s wi");
+    const searchedRecipe = await recipesService.list({
+      phrase: "s wi",
+    });
     expect(searchedRecipe.length).toBe(1);
     expect(searchedRecipe[0].name).toBe(recipe3.name);
   });
   test("user should be able to delete recipe with given id", async () => {
-    const recipeToDelete = await recipesDao.deleteRecipeById(id3);
-    const recipeThatWasDeleted = await recipesDao.getRecipeById(id3);
+    const recipeToDelete = await recipesService.deleteById(id3);
+    const recipeThatWasDeleted = await recipesService.readById(id3);
     expect(recipeThatWasDeleted).toBe(null);
   });
 });

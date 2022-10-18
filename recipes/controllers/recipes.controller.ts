@@ -4,14 +4,14 @@ import recipesService from "../services/recipes.service";
 class RecipesController {
   async listRecipes(req: Request, res: Response) {
     try {
-      const limit = req.query.limit || 20;
-      const page = req.query.page || 0;
-      const searchedPhrase = req.query.phrase || "";
-      const recipes = await recipesService.list(
-        Number(limit),
-        Number(page),
-        searchedPhrase.toString()
-      );
+      const limit = req.query.limit || 10;
+      const page = req.query.page || 1;
+      const phrase = req.query.phrase || "";
+      const recipes = await recipesService.list({
+        limit: Number(limit),
+        page: Number(page),
+        phrase: phrase.toString(),
+      });
       res.status(200).send(recipes);
     } catch (error) {
       res.status(500).send({ errors: "Something went wrong" });
