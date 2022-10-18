@@ -26,8 +26,17 @@ npm start
 ```
 
 ## How it works
+In api we have three kinds of resources
 
-
+### Auth
+```
+ http://localhost:3000/auth/login
+```
+```
+ http://localhost:3000/auth/refresh-token
+```
+### Recipes
+### Users
 
 ## Testing
 
