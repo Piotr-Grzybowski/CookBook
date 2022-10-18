@@ -2,7 +2,6 @@
 
 > API for managing recipes of different meals.
 
-<img src="https://imgupload.pl/images/2022/02/27/working_app.png" alt="working app" width="1000" height="600">
 
 ## Setup the project from the repo locally:
 - First clone this repository
