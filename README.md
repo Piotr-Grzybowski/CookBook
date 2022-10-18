@@ -3,7 +3,7 @@
 > API for managing recipes of different meals.
 
 
-## Setup the project from the repo locally:
+## 1. Setup the project from the repo locally:
 - First clone this repository
 ```shell
 git clone https://github.com/Piotr-Grzybowski/CookBook.git
@@ -25,7 +25,7 @@ npm run install
 npm start
 ```
 
-## How it works
+## 2. How it works
 In api we have three kinds of resources
 
 ### Auth
@@ -56,8 +56,8 @@ In api we have three kinds of resources
  POST http://localhost:3000/users/register
 ```
 
-## Permissions
-There are two kinds of three kinds of permissions in this app.
+## 3. Permissions
+There are three kinds of permissions in this app.
 ### User not logged in
  - can see list of recipes
  - can get single recipe
@@ -69,12 +69,13 @@ There are two kinds of three kinds of permissions in this app.
  - can add new recipe
  - can edit recipe of his ownership
  - can delete recipe of his ownership
+ - can refresh access token
 ### Admin
  - can do everything what logged in user
  - can edit any recipe
  - can delete any recipe
 
-## Testing
+## 4. Testing
 
 - To run test just use npm test
 ```shell
