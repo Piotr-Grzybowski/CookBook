@@ -30,13 +30,31 @@ In api we have three kinds of resources
 
 ### Auth
 ```
- http://localhost:3000/auth/login
+ POST http://localhost:3000/auth/login
 ```
 ```
- http://localhost:3000/auth/refresh-token
+ POST http://localhost:3000/auth/refresh-token
 ```
 ### Recipes
+```
+ GET http://localhost:3000/recipes
+```
+```
+ POST http://localhost:3000/recipes
+```
+```
+ PUT http://localhost:3000/recipes/:recipeId
+```
+```
+ GET http://localhost:3000/recipes/:recipeId
+```
+```
+ DELETE http://localhost:3000/recipes/:recipeId
+```
 ### Users
+```
+ POST http://localhost:3000/users/register
+```
 
 ## Testing
 
